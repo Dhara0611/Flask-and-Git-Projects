@@ -19,7 +19,7 @@ class UserRegister(MethodView):
     def post(self, user_data):
         
         user = UserModel(
-            user = user_data["username"],
+            user = user_data["user"],
             password = pbkdf2_sha256.hash(user_data["password"])
         )
         try:
