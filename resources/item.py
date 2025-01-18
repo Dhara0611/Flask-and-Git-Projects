@@ -12,7 +12,7 @@ blp = Blueprint("Items",__name__,description="Operations on items")
 @blp.route("/item/<int:item_id>")
 class Item(MethodView):
 
-    @jwt_required()
+    # @jwt_required()
     @blp.response(200, ItemSchema)
     def get(self,item_id):
         item = ItemModel.query.get_or_404(item_id)  #query comes form db.model inherited by ItemModel
