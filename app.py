@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from db import db
 import models
 from blocklist import BlOCKLIST
+from dotenv import load_dotenv
 
 
 from resources.item import blp as ItemBlueprint
@@ -16,6 +17,7 @@ from resources.user import blp as UserBlueprint
 
 def create_app(db_url=None):
     app = Flask(__name__)
+    load_dotenv()        #find .env and load its content.
 
     app.config["PROPOGATE_EXCEPTIONS"]=True
     app.config["API_TITLE"]="Stores Rest API"
