@@ -19,7 +19,7 @@ class UserRegister(MethodView):
     def post(self, user_data):
         
         user = UserModel(
-            user = user_data["user"],
+            user = user_data["username"],
             password = pbkdf2_sha256.hash(user_data["password"])
         )
         try:
@@ -36,7 +36,7 @@ class UserLogin(MethodView):
     @blp.arguments(UserSchema)
     def post(self, user_data):
         user = UserModel.query.filter(
-            UserModel.user == user_data["user"]
+            UserModel.username == user_data["username"]
         ).first()
 
         if user and pbkdf2_sha256.verify(user_data["password"],user.password):

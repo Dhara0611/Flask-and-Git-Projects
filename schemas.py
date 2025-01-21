@@ -39,7 +39,7 @@ class TagAndItemSchema(Schema):
 
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
-    user = fields.Str(required=True)
+    username = fields.Str(required=True)
     password = fields.Str(required=True)
 #load-only makes sures it is not sent back to client 
 
