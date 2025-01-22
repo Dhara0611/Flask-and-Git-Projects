@@ -22,9 +22,10 @@ def send_simple_message(to,subject,body):
         f"https://api.mailgun.net/v3/{domain}/messages",
   		auth=("api", os.getenv("MAILGUN_API_KEY")),
   		data={"from": f"Dhara Deshpande <mailgun@{domain}>",
-  			"to": [to],
+  			"to": to,
   			"subject": subject,
   			"text": body})
+
 
 @blp.route("/register")
 class UserRegister(MethodView):
