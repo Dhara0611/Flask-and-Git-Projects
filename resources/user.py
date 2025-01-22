@@ -18,13 +18,14 @@ blp = Blueprint("Users", "users", description="Operations on users")
 
 def send_simple_message(to,subject,body):
     domain=os.getenv("MAILGUN_DOMAIN")
-    return requests.post(
+    response = requests.post(
         f"https://api.mailgun.net/v3/{domain}/messages",
   		auth=("api", os.getenv("MAILGUN_API_KEY")),
   		data={"from": f"Dhara Deshpande <mailgun@{domain}>",
   			"to": [to],
   			"subject": subject,
   			"text": body})
+    return response
 
 
 @blp.route("/register")
@@ -48,13 +49,16 @@ class UserRegister(MethodView):
         db.session.add(user)
         db.session.commit()   
 
-        send_simple_message(
+        response = send_simple_message(
             to=user.email,
             subject="Successfully logged in",
             body=f"Hello {user.username}! You have successfully signed up to the Stores Rest API."
         )
-
-        return {"message":"User created."}, 201
+        if response.status_code == 200:
+            return {"message":"User created."}, 201
+        else:
+            return({"message":"User created, but email could not be sent.",
+                   "error": response.text}),500
 
 @blp.route("/login")
 class UserLogin(MethodView):
