@@ -16,5 +16,5 @@ services:
       - POSTGRES_DB=myapp
     volumes:
       - postgres_data:/var/lib/postgresql/data
-volumes:
+volumes: 
   postgres_data:

@@ -43,6 +43,9 @@ class UserSchema(Schema):
     password = fields.Str(required=True)
 #load-only makes sures it is not sent back to client 
 
+class UserRegisterSchema(UserSchema):
+    email = fields.Str(required=True)
+
 
 
  
