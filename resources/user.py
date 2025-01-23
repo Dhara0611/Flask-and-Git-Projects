@@ -6,6 +6,7 @@ from passlib.hash import pbkdf2_sha256
 from flask_jwt_extended import create_access_token,create_refresh_token,get_jwt_identity,jwt_required,get_jwt
 from flask import jsonify 
 from sqlalchemy import or_
+from flask import current_app
 
 
 from db import db
@@ -13,6 +14,7 @@ from models import UserModel
 from schemas import UserSchema,UserRegisterSchema
 from sqlalchemy.exc import IntegrityError
 from blocklist import BlOCKLIST
+from tasks import send_user_registration_email
 
 blp = Blueprint("Users", "users", description="Operations on users")
 
@@ -49,16 +51,13 @@ class UserRegister(MethodView):
         db.session.add(user)
         db.session.commit()   
 
-        response = send_simple_message(
-            to=user.email,
-            subject="Successfully logged in",
-            body=f"Hello {user.username}! You have successfully signed up to the Stores Rest API."
-        )
-        if response.status_code == 200:
-            return {"message":"User created."}, 201
-        else:
-            return({"message":"User created, but email could not be sent.",
-                   "error": response.text}),500
+        #enqueue function schedules the send_user_registration_email function to be executed later by a worker (a background process).
+        current_app.queue.enqueue(send_user_registration_email,user.email,user.username)
+        #The Redis queue (emails) will hold this job until a worker picks it up.
+        
+        return {"message":"User created."}, 201
+
+
 
 @blp.route("/login")
 class UserLogin(MethodView):
