@@ -39,7 +39,7 @@ class UserRegister(MethodView):
             or_(
                 UserModel.email == user_data["email"],
                 UserModel.username == user_data["username"]
-            )
+            ) #or_ checks that either email or username is true
             ).first():
             abort(409, message="A user with that username or email already exists!")
         
@@ -67,7 +67,8 @@ class UserLogin(MethodView):
         user = UserModel.query.filter(
             UserModel.username == user_data["username"]
         ).first()
-
+        #if user exists, we hash the password and verify it with the one that is hashed and saved in User database. \
+        #we do not unhash the passwords.
         if user and pbkdf2_sha256.verify(user_data["password"],user.password):
             access_token = create_access_token(identity=str(user.id), fresh=True)
             refresh_token = create_refresh_token(identity=str(user.id))

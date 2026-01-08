@@ -21,8 +21,10 @@ def create_app(db_url=None):
     app = Flask(__name__)
     load_dotenv()        #find .env and load its content.
 
+#connection is python object that represents a connection to redis.
     connection = redis.from_url(os.getenv("REDIS_URL"))
-    app.queue = Queue("emails", connection=connection)
+#'email': queue name and connection is the redis connection.
+    app.queue = Queue("emails", connection=connection) 
 
     app.config["PROPOGATE_EXCEPTIONS"]=True
     app.config["API_TITLE"]="Stores Rest API"
@@ -36,7 +38,7 @@ def create_app(db_url=None):
     db.init_app(app)
     migrate = Migrate(app, db)
 
-
+#connects flask-smorest extension to the flask app
     api = Api(app)
 
     app.config["JWT_SECRET_KEY"]="Dhara"

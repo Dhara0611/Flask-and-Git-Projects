@@ -51,7 +51,8 @@ class ItemList(MethodView):
     @blp.arguments(ItemSchema)
     @blp.response(201, ItemSchema)
     def post(self,item_data):
-        item = ItemModel(**item_data)   #** convert data into keyword arg
+        item = ItemModel(**item_data)   #** unpacks dictionary into keyword argument
+        #**item_data lets us map the dictionary keys directly to ItemModel constructor arguments.        
 
         try:
             db.session.add(item)

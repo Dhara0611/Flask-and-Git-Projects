@@ -1,5 +1,5 @@
 from db import db
-#green db - folder and blue is the Sqlalchemy object that is created inside it
+#first db - folder and second is the Sqlalchemy object that is created inside it
 
 class ItemModel(db.Model):
     __tablename__ = "items"
@@ -8,6 +8,7 @@ class ItemModel(db.Model):
     name = db.Column(db.String(80),unique=True, nullable=False)
     description = db.Column(db.String())
     price = db.Column(db.Float(precision=2), unique=False, nullable=False)
+#foriegnkey syntax = tablename.column
     store_id = db.Column(db.Integer, db.ForeignKey("stores.id"),unique=False, nullable=False)
     store = db.relationship("StoreModel", back_populates="items")
     tags = db.relationship("TagModel", back_populates="items", secondary="items_tags")

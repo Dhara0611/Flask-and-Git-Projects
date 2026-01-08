@@ -17,6 +17,7 @@ class TagsInStore(MethodView):
         store=StoreModel.query.get_or_404(store_id)
 
         return store.tags.all()
+    #.all() is required because tags are set to lazy=dynamic in StoreModel.
         
     @blp.arguments(TagSchema)
     @blp.response(201, TagSchema)

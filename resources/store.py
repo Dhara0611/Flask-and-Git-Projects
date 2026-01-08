@@ -33,6 +33,8 @@ class StoreList(MethodView):
     @blp.response(201, StoreSchema)
     def post(self,store_data):
 
+    # **store_data- ** is used for dictionary unpacking.
+    # It takes all key-value pairs from an existing dictionary and include them in a new dictionary.
         store=StoreModel(**store_data)
         try:
             db.session.add(store)
