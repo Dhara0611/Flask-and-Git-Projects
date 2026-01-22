@@ -96,7 +96,7 @@ Build and start the app via Docker:
 
 ## 📦 API Endpoints
 
-#### ✨ Users
+#### 👥 Users
 
 | Method | Endpoint    | Description           |
 | ------ | ----------- | --------------------- |
@@ -104,7 +104,7 @@ Build and start the app via Docker:
 | POST   | `/login`    | Login and get JWT     |
 | POST   | `/logout`   | Logout / revoke token |
 
-#### 📦 Stores
+#### 🛒 Stores
 
 | Method | Endpoint      | Description          |
 | ------ | ------------- | -------------------- |
@@ -120,7 +120,7 @@ Build and start the app via Docker:
 | POST   | `/item`       | Add item             |
 | DEL    | `/item/<id>`  | Delete item          |
 
-#### 📊 Tags
+#### 🏷️ Tags
 
 | Method | Endpoint             | Description             |
 | ------ | -------------------- | ----------------------- |
