@@ -127,3 +127,9 @@ Build and start the app via Docker:
 | GET    | `/store/<id>/tag`    | Get tags in store       |
 | POST   | `/item/<id>/tag/<id>`| Link item under a tag   |
 | DEL    | `/tag/<id>`          | Delete tag with no items|
+
+## 📌 Swagger UI
+
+#### Integrated Swagger UI for interactive API documentation and real-time endpoint testing.
+
+![Swagger UI Screenshot](images/swagger-ui.png)
